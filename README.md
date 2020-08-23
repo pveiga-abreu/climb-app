@@ -1,2 +1,8 @@
-# front-end-web-climb
-front end web do projeto climb
+#Climb APP
+
+Repositório do projeto Climb APP
+
+Made by:
+@GhabrielFiorotti
+@MarcusCastilho
+@pveiga-abreu
