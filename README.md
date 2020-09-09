@@ -2,7 +2,20 @@
 
 Repositório do projeto Climb APP
 
-Made by:
-@GhabrielFiorotti
-@MarcusCastilho
-@pveiga-abreu
+Made by: 
+&nbsp;
+* [@GhabrielFiorotti](https://github.com/GhabrielFiorotti)
+&nbsp;
+* [@MarcusCastilho](https://github.com/MarcusCastilho)
+&nbsp;
+* [@pveiga-abreu](https://github.com/pveiga-abreu)
+
+---
+
+Using:
+&nbsp;
+* Node.JS;
+&nbsp;
+* React;
+&nbsp;
+* React Native.
