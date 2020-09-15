@@ -2,7 +2,7 @@ import React from 'react';
 import { Container } from './style.js';
 import Button from '../../components/Button';
 import Footer from '../../components/Footer';
-import logo from '../../images/logo.svg';
+import logo from '../../assets/logo.svg';
 
 export default function Home() {
     function handleButton() {
@@ -13,9 +13,9 @@ export default function Home() {
         <Container>
             <div className="homepage">
                 <img src={ logo } className="image"/>
-                <Button onClick={() => handleButton()}>
+                <a href="/home"><Button onClick={() => handleButton()}>
                     Climb
-                </Button>
+                </Button></a>
                 <Footer />
             </div>
         </Container>

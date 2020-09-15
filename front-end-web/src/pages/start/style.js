@@ -9,6 +9,8 @@ export const Container = styled.div`
     justify-content: space-around;
     .button {
         width: 200px;
+        height: 60px;
+        border-radius: 30px;
     }
 }
 .image {

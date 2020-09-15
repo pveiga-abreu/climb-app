@@ -1,5 +1,5 @@
 import React from 'react';
-import footerImage from '../../images/footer.svg';
+import footerImage from '../../assets/footer.svg';
 import { StyledFooter } from './style.js';
 
 const Footer = () => {
