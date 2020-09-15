@@ -8,6 +8,7 @@ import {
   Image,
   Button,
   Alert,
+  TouchableOpacity,
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
@@ -21,23 +22,24 @@ const App: () => React$Node = () => {
           <View style={styles.logoContainer}>
             <Image style={styles.logo} source={require('./images/logo.png')} />
           </View>
+
           <View style={styles.titleContainer}>
             <Text style={styles.titlePrimary}>Climb with</Text>
             <Text style={styles.titleSecondary}>intelligence</Text>
           </View>
-          <View style={styles.buttonContainerPrimary}>
-            <Button
-              title="CLIMB"
-              color="#4F87CE"
-              onPress={() => Alert.alert('CLIMB')}
-            />
-          </View>
-          <View style={styles.buttonContainerSecondary}>
-            <Button
-              title="No, thanks"
-              color="#4F87CE"
-              onPress={() => Alert.alert('No, thanks')}
-            />
+
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.buttonPrimary}
+              onPress={() => Alert.alert('CLIMB')}>
+              <Text style={styles.textButtonPrimary}>CLIMB</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.buttonSecondary}
+              onPress={() => Alert.alert('No, thanks')}>
+              <Text style={styles.textButtonSecondary}>No, thanks</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </SafeAreaView>
@@ -80,17 +82,43 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins',
     color: '#112257',
   },
-  buttonContainerPrimary: {
+  buttonContainer: {
     paddingTop: 120,
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
   },
-  buttonContainerSecondary: {
-    paddingTop: 20,
+  buttonPrimary: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
+    width: '40%',
+    marginBottom: 10,
+    padding: 8,
+    borderStyle: 'solid',
+    borderTopWidth: 1,
+    borderRightWidth: 1,
+    borderBottomWidth: 1,
+    borderLeftWidth: 1,
+    borderColor: '#62A5DF',
+    borderRadius: 30,
+  },
+  buttonSecondary: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '40%',
+    padding: 8,
+  },
+  textButtonPrimary: {
+    fontWeight: '700',
+    fontSize: 20,
+    fontFamily: 'Poppins',
+    color: '#62A5DF',
+  },
+  textButtonSecondary: {
+    fontWeight: '300',
+    fontSize: 20,
+    fontFamily: 'Poppins',
+    color: '#62A5DF',
   },
 });
 
