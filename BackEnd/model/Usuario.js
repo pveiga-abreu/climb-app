@@ -9,7 +9,6 @@ const users = database.sequelize.define('users', {
     password : {type : database.Sequelize.STRING(60),allowNull : false},
     email : {type : database.Sequelize.STRING(50), allowNull : false},
     profile : {type : database.Sequelize.STRING(15)}
-    
 }); 
 
 
