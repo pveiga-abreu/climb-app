@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Home from './pages/home/home.js';
 import Start from './pages/start/start.js';
@@ -11,12 +11,14 @@ import Register from './pages/register/register.js';
 export default function Routes() {
     return(
         <BrowserRouter>
-            <Route path="/" exact component={ Start } />
-            <Route path="/home" exact component={ Home } />
-            <Route path="/login" exact component={ Login } />
-            <Route path="/wallet" exact component={ Wallet } />
-            <Route path="/profile" exact component={ Profile } />
-            <Route path="/register" exact component={ Register } />
+            <Switch>
+                <Route exact path="/" component={ Start } />
+                <Route exact path="/home" component={ Home } />
+                <Route exact path="/login" component={ Login } />
+                <Route exact path="/wallet" component={ Wallet } />
+                <Route exact path="/profile" component={ Profile } />
+                <Route exact path="/register" component={ Register } />
+            </Switch>
         </BrowserRouter>
     )
 }

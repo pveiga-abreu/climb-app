@@ -1,34 +1,55 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef } from 'react';
+import { Form } from '@unform/web';
+import * as Yup from 'yup';
+
 import { Container } from './style.js';
 import Footer from '../../components/Footer';
 import Button from '../../components/Button/index.js';
 import logo from '../../assets/logo.svg';
+import Input from '../../components/Form/input.js';
 
 export default function Login() {
-    const [loginInfo, setLoginInfo] = useState(0);
+    const formRef = useRef(null);
 
-    useEffect(() => {
-        console.log(loginInfo);
-    }, [loginInfo])
+    async function handleSubmit(data, { reset }) {
+        try {
+            const schema = Yup.object().shape({
+                email: Yup.string().email('Diite um e-mail válido').required('E-mail obrigatório'),
+                pwd: Yup.string().min(6, 'Mínimo de 6 caracteres').required('Senha obrigatória')
+            });
 
-    function handleSubmit(data) {
-        setLoginInfo({
-            login: data.login,
-            password: data.password
-        });
+            await schema.validate(data, {
+                abortEarly: false
+            });
+
+            console.log("Tá tudo certo");
+
+        } catch (err) {
+            if(err instanceof Yup.ValidationError) {
+                const errorMessages = {};
+
+                err.inner.forEach(e => {
+                    errorMessages[e.path] = e.message;
+                });
+
+                console.log(errorMessages);
+                alert(errorMessages.pwd);
+                reset();
+            }
+        }
     }
 
     return(
         <Container>
             <div className="login-box">
                 <img src={ logo } />
-                <form onSubmit={ handleSubmit } className="form">
-                    <label>E-Mail</label>
-                    <input type="text" name="email" placeholder="Digite seu e-mail"/>
+                <Form onSubmit={ handleSubmit } className="form">
+                    <label>E-mail</label>
+                    <Input type="email" name="email" placeholder="Digite seu e-mail"/>
                     <label>Senha</label>
-                    <input type="password" name="pwd" placeholder="Digite sua senha"/>
-                    <Button type="submit" >Login</Button>
-                </form>
+                    <Input type="password" name="pwd" placeholder="Digite sua senha"/>
+                    <Button type="submit">Login</Button>
+                </Form>
             </div>
             <Footer />
         </Container>
