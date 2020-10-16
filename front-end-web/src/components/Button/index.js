@@ -3,11 +3,11 @@ import { StyledButton } from './style.js';
 
 const Button = ({ children, onClick }) => {
 
-    function Hover(b) {
-        b.target.style.backgroundColor = "#6081f0";
+    function Hover(self) {
+        self.target.style.backgroundColor = "#a38431";
     }
-    function Leave(b) {
-        b.target.style.backgroundColor = "#314ba3";
+    function Leave(self) {
+        self.target.style.backgroundColor = "#314ba3";
     }
 
     return(

@@ -1,8 +1,9 @@
 import React from 'react';
 import logo from '../../assets/logo.svg';
 import { StyledHeader } from './style.js';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faWallet, faUser } from '@fortawesome/free-solid-svg-icons';
+import home from '../../assets/home.svg';
+import wallet from '../../assets/wallet.svg';
+import profile from '../../assets/profile.svg';
 
 const Header = () => {
     return(
@@ -12,9 +13,9 @@ const Header = () => {
             </div>
             <span></span>
             <div className="nav">
-                <a href="/home"><FontAwesomeIcon icon={ faHome } size="2x" className="icon" /></a>
-                <a href="/wallet"><FontAwesomeIcon icon={ faWallet } size="2x" className="icon" /></a>
-                <a href="/profile"><FontAwesomeIcon icon={ faUser } size="2x" className="icon" /></a>
+                <a href="/home"><img src={ home } className="icon" /></a>
+                <a href="/wallet"><img src={ wallet } className="icon" /></a>
+                <a href="/profile"><img src={ profile } className="icon" /></a>
             </div>
         </StyledHeader>
     )

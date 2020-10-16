@@ -13,7 +13,7 @@ export default function Home() {
         <Container>
             <div className="homepage">
                 <img src={ logo } className="image"/>
-                <a href="/home"><Button onClick={() => handleButton()}>
+                <a href="/home"><Button onClick={ handleButton }>
                     Climb
                 </Button></a>
                 <Footer />
