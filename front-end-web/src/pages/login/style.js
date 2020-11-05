@@ -14,6 +14,9 @@ export const Container = styled.div`
         min-height: 450px;
         justify-content: space-evenly;
         align-items: center;
+        .button {
+            width: 110px;
+        }
     }
     .login-box img {
         width: 50%;

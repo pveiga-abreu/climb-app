@@ -6,10 +6,9 @@ import { Container } from './style.js';
 import Footer from '../../components/Footer';
 import Button from '../../components/Button/index.js';
 import logo from '../../assets/logo.svg';
-import Input from '../../components/Form/input.js';
+import Input from '../../components/Form/input/input.js';
 
 export default function Login() {
-    const formRef = useRef(null);
 
     async function handleSubmit(data, { reset }) {
         try {
@@ -21,8 +20,6 @@ export default function Login() {
             await schema.validate(data, {
                 abortEarly: false
             });
-
-            console.log("Tá tudo certo");
 
         } catch (err) {
             if(err instanceof Yup.ValidationError) {

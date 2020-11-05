@@ -19,6 +19,9 @@ export const Container = styled.div`
         min-height: 450px;
         justify-content: space-evenly;
         align-items: center;
+        .button {
+            width: 130px;
+        }
     }
     .form {
         display: flex;

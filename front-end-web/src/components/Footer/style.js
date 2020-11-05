@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const StyledFooter = styled.footer`
     background-color: #112257;
-    margin-top: 30px;
+    margin-top: 20px;
     width: 100%;
     min-height: 170px;
 
