@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 
 import { Container } from './style.js';
 import Input from '../../components/Form/input/input.js';
+import Select from '../../components/Form/select/select.js';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Button from '../../components/Button';
@@ -54,9 +55,11 @@ export default function Wallet() {
                                 <div className="box">
                                     <Form onSubmit={ handleSubmit } className="form">
                                         <label>Input</label>
-                                        <Input type="text" name="input1" placeholder="Input"/>
+                                        <Input type="text" name="input1" placeholder="Input" />
                                         <label>Input</label>
-                                        <Input type="text" name="input2" placeholder="Input"/>
+                                        <Input type="text" name="input2" placeholder="Input" />
+                                        <label>Select</label>
+                                        <Select name="select1" placeholder="Select" />
                                         <Button type="submit">Adicionar</Button>
                                     </Form>
                                 </div>
