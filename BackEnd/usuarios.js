@@ -10,7 +10,7 @@ router.post('/cadastro', (req, res) => {
     bcrypt.hash(req.body.password, 10, async (errBcrypt, hash) => {
 
         if (errBcrypt) {
-            return res.json({ error: errBcrypt }, 500)
+            return res.status(500).json({ error: errBcrypt })
         }
 
         try {
@@ -29,10 +29,10 @@ router.post('/cadastro', (req, res) => {
                         email: req.body.email,
                     }
                 }
-                return res.json(response, 201);
+                return res.status(201).json(response);
             }
         } catch (error) {
-            return res.json({ Mensagem: "Erro ao inserir no banco" }, 400);
+            return res.status(400).json({ Mensagem: "Erro ao inserir no banco" });
         }
     });
 });
@@ -69,14 +69,14 @@ router.post('/login', async (req, res) => {
                         }
                     );
                     return res.json({ mensagem: "Autenticado com sucesso", token: token, id : _id, name : _name, 
-                    email : _email, cpf_cnpj : _cpf_cnpj, tel : _tel, profile : _profile }, 200);
+                    email : _email, cpf_cnpj : _cpf_cnpj, tel : _tel, profile : _profile });
                 }
-                return res.json({ mensagem: "Falha na autenticação" }, 401);
+                return res.status(401).json({ mensagem: "Falha na autenticação" });
 
             })
         }
     } catch (error) {
-        return res.json({ mensagem: "Falha na autenticação" }, 401);
+        return res.status(401).json({ mensagem: "Falha na autenticação" });
     }
 });
 
@@ -109,10 +109,10 @@ router.patch('/update/:id', async (req, res)=>{
                         profile: req.body.profile
                     }
                 }
-                return res.json(response, 201);
+                return res.status(201).json(response);
             }
         } catch (error) {
-            return res.json({ Mensagem: "Erro ao atualizar no banco" }, 400);
+            return res.status(400).json({ Mensagem: "Erro ao atualizar no banco" });
         }
     });
 });
@@ -125,10 +125,10 @@ router.delete('/delete/:id', async (req, res)=>{
                 user_id : req.params.id
             }
         })
-        return res.json({Mensagem : "Usuário deletado com sucesso"}, 200)
+        return res.json({Mensagem : "Usuário deletado com sucesso"})
     }
     catch (error) {
-        return res.json({ Mensagem: "Erro ao deletar Usuário" }, 400);
+        return res.status(400).json({ Mensagem: "Erro ao deletar Usuário" });
     }
 });
 module.exports = router;
