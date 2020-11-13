@@ -1,21 +1,16 @@
 import React from 'react';
-import { StyledButton } from './style.js';
+import { StyledButton, StyledContainerButton } from './style.js';
 
-const Button = ({ children, onClick }) => {
-
-    function Hover(self) {
-        self.target.style.backgroundColor = "#a38431";
-    }
-    function Leave(self) {
-        self.target.style.backgroundColor = "#314ba3";
-    }
-
+export const Button = ({ children, onClick, ...props }) => {
     return(
-        <StyledButton className="button" onClick={onClick} 
-            onMouseOver={Hover} onMouseLeave={Leave}>
+        <StyledButton className="button" onClick={onClick} {...props}>
             { children }
         </StyledButton>
     )
 }
+
+export const ContainerButton = ({ children, id, ...props }) => (
+    <StyledContainerButton className='buttonContainer' id={id} {...props}>{children}</StyledContainerButton>
+  )
 
 export default Button;

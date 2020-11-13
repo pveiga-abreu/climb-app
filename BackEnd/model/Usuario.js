@@ -12,7 +12,9 @@ const users = database.sequelize.define('users', {
 }); 
 
 
-console.log("RODANDO")
+ // RODA O PROGRAMA COM : yarn start
+console.log("Ghabriel Viadin")
+// console.log("RODANDO")
 //usuario.sync({force: true});
 module.exports = users;
 

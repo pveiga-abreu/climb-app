@@ -1,51 +1,84 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
 
-import { Container } from './style.js';
 import Footer from '../../components/Footer';
-import Button from '../../components/Button/index.js';
+import {Load} from '../../components/Load';
+import {Button, ContainerButton} from '../../components/Button';
 import logo from '../../assets/logo.svg';
-import Input from '../../components/Form/input/input.js';
+import Input from '../../components/Form/Input';
+
+import {api} from '../../services';
+
+import { Container } from './style';
 
 export default function Login() {
+  const formLogin = useRef(null)
+  const [onRequest, setOnRequest] = useState(false)
 
-    async function handleSubmit(data, { reset }) {
-        try {
-            const schema = Yup.object().shape({
-                email: Yup.string().email('Diite um e-mail válido').required('E-mail obrigatório'),
-                pwd: Yup.string().min(6, 'Mínimo de 6 caracteres').required('Senha obrigatória')
-            });
 
-            await schema.validate(data, {
-                abortEarly: false
-            });
-
-        } catch (err) {
-            if(err instanceof Yup.ValidationError) {
-                const errorMessages = {};
-
-                err.inner.forEach(e => {
-                    errorMessages[e.path] = e.message;
+    function handleSubmit(data, { reset }) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const schema = Yup.object().shape({
+                    email: Yup.string()
+                        .email('Diite um e-mail válido')
+                        .required('E-mail obrigatório'),
+                    password: Yup.string()
+                        .required('Senha obrigatória')
+                })
+    
+                await schema.validate(data, {
+                    abortEarly: false
                 });
 
-                console.log(errorMessages);
-                alert(errorMessages.pwd);
-                reset();
+                try{
+                    setOnRequest(true)
+                    const request = await api.post(`/login`, {
+                        email: data.email, 
+                        password: data.password 
+                    })
+                    console.log(request)
+
+
+                    setOnRequest(false)
+                    resolve()
+                }catch(err){
+                    setOnRequest(false)
+                    reject(err)
+                }
+    
+            } catch (err) {
+                if (err instanceof Yup.ValidationError) {
+                    const errorMessages = {}
+            
+                    err.inner.forEach(error => {
+                      errorMessages[error.path] = error.message
+                    })
+                    formLogin.current.setErrors(errorMessages)
+                  }
             }
-        }
+        })
     }
 
     return(
         <Container>
             <div className="login-box">
-                <img src={ logo } />
-                <Form onSubmit={ handleSubmit } className="form">
-                    <label>E-mail</label>
-                    <Input type="email" name="email" placeholder="Digite seu e-mail"/>
-                    <label>Senha</label>
-                    <Input type="password" name="pwd" placeholder="Digite sua senha"/>
-                    <Button type="submit">Login</Button>
+                <img src={ logo } alt=""/>
+                <Form ref={formLogin} onSubmit={ handleSubmit } className="form">
+                    <Input label="E-mail" type="email" name="email" placeholder="Digite seu e-mail"/>
+                    <Input label="Senha" type="password" name="password" placeholder="Digite sua senha"/>
+                    <ContainerButton>
+                    {
+                        onRequest ? (
+                            <Button type="submit" disabled><Load></Load></Button>
+                        ) : (
+                            <Button type="submit">Login</Button>
+                        )
+                    }
+                    </ContainerButton>
+
+                    
                 </Form>
             </div>
             <Footer />
