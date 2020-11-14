@@ -13,6 +13,6 @@ const users = database.sequelize.define('users', {
 
 
 console.log("RODANDO")
-//usuario.sync({force: true});
+users.sync({force: false});
 module.exports = users;
 
