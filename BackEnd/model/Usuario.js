@@ -1,4 +1,4 @@
-const database = require('../database');
+const database = require('../database.js');
 
 
 const users = database.sequelize.define('users', {
@@ -12,7 +12,7 @@ const users = database.sequelize.define('users', {
 }); 
 
 
-console.log("RODANDO")
+console.log("RODANDO usuario")
 users.sync({force: false});
 module.exports = users;
 

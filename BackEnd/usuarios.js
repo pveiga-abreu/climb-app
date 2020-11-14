@@ -1,14 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const Usuario = require('./model/Usuario');
+const Usuario = require('./model/Usuario.js');
 const jwt = require('jsonwebtoken');
 require('dotenv/config');
 
 
 router.post('/cadastro', (req, res) => {
     bcrypt.hash(req.body.password, 10, async (errBcrypt, hash) => {
-
         if (errBcrypt) {
             return res.json({ error: errBcrypt }, 500)
         }
@@ -32,11 +31,11 @@ router.post('/cadastro', (req, res) => {
                 return res.json(response, 201);
             }
         } catch (error) {
-            return res.json({ Mensagem: "Erro ao inserir no banco" }, 400);
+            console.log(error);
+            return res.json({ Mensagem: "Erro ao inserir no banco" }, error, 400);
         }
     });
 });
-
 
 
 router.post('/login', async (req, res) => {
@@ -59,17 +58,16 @@ router.post('/login', async (req, res) => {
                 
                 if (result) {
                     const token = jwt.sign({
-                        user_id: _id,
-                        name: _name,
-                        email: _email
+                        id : _id, 
+                        name : _name, 
+                        profile : _profile
                     },
-                        process.env.jwd_key,
+                        process.env.JWD_KEY,
                         {
                             expiresIn: "1h"
                         }
                     );
-                    return res.json({ mensagem: "Autenticado com sucesso", token: token, id : _id, name : _name, 
-                    email : _email, cpf_cnpj : _cpf_cnpj, tel : _tel, profile : _profile }, 200);
+                    return res.json({ mensagem: "Autenticado com sucesso", token: token}, 200);
                 }
                 return res.json({ mensagem: "Falha na autenticação" }, 401);
 

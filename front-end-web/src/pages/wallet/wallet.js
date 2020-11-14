@@ -4,8 +4,8 @@ import { Form } from '@unform/web';
 import * as Yup from 'yup'; 
 
 import { Container } from './style.js';
-import Input from '../../components/Form/input/input.js';
-import Select from '../../components/Form/select/select.js';
+import Input from '../../components/Form/Input';
+import Select from '../../components/Form/Select';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Button from '../../components/Button';

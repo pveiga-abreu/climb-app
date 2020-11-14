@@ -3,9 +3,9 @@ import { Form } from '@unform/web';
 
 import { Container } from './style.js';
 import Footer from '../../components/Footer';
-import Button from '../../components/Button/index.js';
+import Button from '../../components/Button';
 import logo from '../../assets/logo.svg';
-import Input from '../../components/Form/input/input.js';
+import Input from '../../components/Form/Input';
 
 export default function Register() {
     
