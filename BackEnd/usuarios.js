@@ -79,7 +79,7 @@ router.post('/login', async (req, res) => {
 });
 
 
-router.patch('/update/:id', async (req, res)=>{
+router.put('/update/:id', async (req, res)=>{
     bcrypt.hash(req.body.password, 10, async (errBcrypt, hash) => {
 
         if (errBcrypt) {

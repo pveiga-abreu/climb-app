@@ -28,7 +28,7 @@ router.post('/cadastro', async (req, res) => {
     }
 });
 
-router.patch('/update/:id', async (req, res) => {
+router.put('/update/:id', async (req, res) => {
     try {
         const resposta = await Wallet.update({
             name: req.body.name,
