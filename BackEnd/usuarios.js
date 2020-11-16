@@ -7,11 +7,13 @@ require('dotenv/config');
 
 
 router.post('/cadastro', (req, res) => {
+    console.log(req.body)
     bcrypt.hash(req.body.password, 10, async (errBcrypt, hash) => {
 
         if (errBcrypt) {
             return res.status(500).json({ error: errBcrypt })
         }
+        console.log(hash)
 
         try {
             const resposta = await Usuario.create({
@@ -22,6 +24,7 @@ router.post('/cadastro', (req, res) => {
                 email: req.body.email,
                 profile: req.body.profile
             });
+            console.log(resposta)
             if (resposta) {
                 const response = {
                     mensagem: "Usuário inserido com sucesso",
@@ -32,6 +35,8 @@ router.post('/cadastro', (req, res) => {
                 return res.status(201).json(response);
             }
         } catch (error) {
+            console.log(error)
+
             return res.status(400).json({ Mensagem: "Erro ao inserir no banco" });
         }
     });
@@ -40,14 +45,17 @@ router.post('/cadastro', (req, res) => {
 
 
 router.post('/login', async (req, res) => {
+    console.log(req.body)
     try {
         const resposta = await Usuario.findAll({
             where: {
                 email: req.body.email,
             }
         })
+        console.log(resposta)
         if (resposta) {
             const senha = resposta[0].password
+            console.log(senha)
             bcrypt.compare(req.body.password, senha, (err, result) => {
                 let _id = resposta[0].user_id
                 let _name = resposta[0].name
