@@ -17,5 +17,3 @@ Using:
 * Node.JS(Express);
 &nbsp;
 * React;
-&nbsp;
-* React Native.
