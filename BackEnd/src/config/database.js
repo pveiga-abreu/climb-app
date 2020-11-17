@@ -85,6 +85,7 @@ tickers.belongsTo(asset_classes, {foreignKey: 'asset_class_id', onDelete: 'casca
 conn.sync();
 
 module.exports = {
+    conn,
     users,
     wallets,
     assets,

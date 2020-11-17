@@ -1,8 +1,16 @@
+const validator = require('../validators/wallet_validators');
 const db = require('../models/wallet_dao');
 
 exports.register_wallet = async (req, res) => {
     try {
-        const data = req.body;
+        let data = req.body;
+
+        const v = validator.validate_wallet_insert(data);
+        if(!v.valid) {
+            return res.status(400).send({message: v.errors})
+        }
+
+        data.user_id = req.params.user;
 
         const response = await db.register_wallet(data);
 
@@ -28,6 +36,11 @@ exports.register_wallet = async (req, res) => {
 exports.alter_wallet = async (req, res) => {
     try {
         const data = req.body;
+
+        const v = validator.validate_wallet_update(data);
+        if(!v.valid) {
+            return res.status(400).send({message: v.errors})
+        }
         
         const response = await db.alter_wallet(data, req.params.id)
         
@@ -41,7 +54,7 @@ exports.alter_wallet = async (req, res) => {
         }
         
     } catch (error) {
-        return res.status(500).json({message: "Erro ao atualizar!"},error);
+        return res.status(500).json({message: "Erro ao atualizar!"}, error);
     }
 }
 
