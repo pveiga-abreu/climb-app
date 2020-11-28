@@ -3,7 +3,7 @@ const validate = require('jsonschema').validate;
 login_schema = {
     type: "object",
     properties: {
-        email: {type: "string"},
+        email: {type: "string", format: "email"},
         password: {type: "string"}
     },
     required: ["email","password"]
@@ -16,7 +16,7 @@ insert_user_schema = {
         tel: {type: "string"},
         cpf_cnpj: {type: "string"},
         password: {type: "string"},
-        email: {type: "string"},
+        email: {type: "string", format: "email"},
         profile: {type: "string"}
     },
     required: ["name","tel","cpf_cnpj","password","email"]
@@ -29,7 +29,7 @@ update_user_schema = {
         tel: {type: "string"},
         cpf_cnpj: {type: "string"},
         password: {type: "string"},
-        email: {type: "string"},
+        email: {type: "string", format: "email"},
         profile: {type: "string"}
     }
 }
