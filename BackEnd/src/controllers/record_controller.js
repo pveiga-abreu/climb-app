@@ -2,21 +2,43 @@ const db = require('../models/record_dao');
 
 const validator = require('../validators/record_validators');
 
-exports.get_records = async (req, res) => {
-    const asset = req.params.asset;
-    
-    const resp = await db.get_records(asset)
-}
-
 exports.get_record_by_id = async (req, res) => {
     const id = req.params.id;
     
+    const response = await db.get_record_by_id(id);
 
+    if(response != null) res.json(response);
+    else res.status(204).json({});
+
+}
+
+exports.get_asset_records = async (req, res) => {
+    const asset = req.params.asset;
+    
+    const response = await db.get_asset_records(asset);
+
+    if(response != null) res.json(response);
+    else res.status(204).json({});
+
+}
+
+exports.get_wallet_records = async (req, res) => {
+    const wallet = req.params.wallet;
+    
+    const response = await db.get_wallet_records(wallet);
+
+    if(response != null) res.json(response);
+    else res.status(204).json({});
+    
 }
 
 exports.get_last_record = async (req, res) => {
     const wallet = req.params.wallet;
-    
+
+    const response = await db.get_last_record(wallet);
+
+    if(response != null) res.json(response);
+    else res.status(204).json({});
 
 }
 
@@ -29,9 +51,9 @@ exports.insert_record = async (req, res) => {
         return res.status(400).send({message: v.errors});
     }
 
-    const resp = await db.insert_record(wallet, data);
+    const response = await db.insert_record(wallet, data);
     
-    if(resp) {
+    if(response) {
         res.status(201).json({
             message: "Registro incluído com sucesso!"
         });
@@ -49,12 +71,12 @@ exports.alter_record = async (req, res) => {
     const v = validator.validate_update_record(data);
 
     if(!v.valid) {
-        return res.status(400).send({message: v.errors})
+        return res.status(400).send({message: v.errors});
     }
 
-    const resp = await db.alter_record(data, id);
+    const response = await db.alter_record(data, id);
 
-    if(resp) {
+    if(response) {
         res.status(201).json({
             message: "Registro atualizado com sucesso!"
         });
@@ -69,10 +91,10 @@ exports.alter_record = async (req, res) => {
 exports.delete_record = async (req, res) => {
     const id = req.params.id;
 
-    const resp = await db.delete_record(id);
+    const response = await db.delete_record(id);
 
-    if(resp) {
-        res.status(200).json({
+    if(response) {
+        res.json({
             message: "Registro apagado com sucesso!"
         });
     } else {

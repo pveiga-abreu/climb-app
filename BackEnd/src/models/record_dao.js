@@ -1,25 +1,7 @@
-const { QueryTypes } = require('sequelize');
 const moment = require('moment');
 
 const { conn, assets, asset_records } = require('../config/database');
 const { avg_price, full_avg_price } = require('../util/avg_price');
-
-exports.get_records = async asset => {
-    try{
-        const resp = await asset_records.findAll({
-            where: {
-                asset_id: asset
-            }
-        });
-
-        return resp;
-
-    } catch (e) {
-        console.log(e);
-
-        return null;
-    }
-}
 
 exports.get_record_by_id = async id => {
     try{
@@ -34,11 +16,64 @@ exports.get_record_by_id = async id => {
     }
 }
 
+exports.get_asset_records = async asset => {
+    try{
+        const resp = await asset_records.findAll({
+            where: {
+                asset_id: asset
+            }
+        });
+        
+        if(resp.length) return resp;
+        else return null;
+
+    } catch (e) {
+        console.log(e);
+
+        return null;
+    }
+}
+
+exports.get_wallet_records = async wallet => {
+    try{
+        const resp = await conn.query(`
+        select
+            ast.asset_id,
+            ast.ticker,
+            rec.record_id,
+            rec.dat as 'date',
+            rec.quotas,
+            rec.price,
+            rec.order_type
+        from
+            wallets wlt
+            left join assets ast on (ast.wallet_id = wlt.wallet_id)
+            left join asset_records rec on (rec.asset_id = ast.asset_id)
+		where
+			wlt.wallet_id = ${wallet}
+        `);
+        console.log(resp);
+        if(resp) return resp[0];
+        else return null;
+
+    } catch (e) {
+        console.log(e);
+
+        return null;
+    }
+}
+
 exports.get_last_record = async wallet => {
     try{
         const resp = await conn.query(`
         select
-            *
+            ast.asset_id,
+            ast.ticker,
+            rec.record_id,
+            rec.dat as 'date',
+            rec.quotas,
+            rec.price,
+            rec.order_type
         from
             wallets wlt
             left join assets ast on (ast.wallet_id = wlt.wallet_id)
@@ -47,9 +82,10 @@ exports.get_last_record = async wallet => {
 			wlt.wallet_id = ${wallet}
         order by rec.dat desc, rec.record_id desc
 		limit 1
-        `, { type: QueryTypes.SELECT });
+        `);
 
-        return resp;
+        if(resp) return resp[0][0];
+        else return null;
 
     } catch (e) {
         console.log(e);
