@@ -3,6 +3,8 @@ const router = express.Router();
 
 const controller = require('../controllers/user_controller');
 
+router.get('/wallets/:id', controller.get_wallets);
+
 router.post('/login', controller.login);
 
 router.post('/register', controller.register_user);

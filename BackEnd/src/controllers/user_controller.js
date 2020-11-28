@@ -4,6 +4,15 @@ const bcrypt = require('bcrypt');
 const validator = require('../validators/user_validator');
 const db = require('../models/user_dao');
 
+exports.get_wallets = async (req, res) => {
+    const id = req.params.id;
+    
+    const response = await db.get_wallets(id);
+
+    if(response != null) res.json(response);
+    else res.status(204).json({});
+}
+
 exports.login = async (req, res) => {
     try {
         const v = validator.validate_login(req.body);
