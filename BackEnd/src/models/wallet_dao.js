@@ -1,5 +1,34 @@
-const { wallets } = require('../config/database');
+const { wallets, assets } = require('../config/database');
 
+exports.wallet_info = async id => {
+    try{
+        const resp = await wallets.findByPk(id);
+
+        return resp;
+
+    } catch (e) {
+        console.log(e);
+
+        return null;
+    }
+}
+
+exports.assets_info = async id => {
+    try {
+        const resp = await assets.findAll({
+            where: {
+                wallet_id: id
+            }
+        });
+
+        return resp;
+
+    } catch(e) {
+        console.log(e);
+        return [];
+    }
+
+}
 
 exports.register_wallet = async data => {
     try {

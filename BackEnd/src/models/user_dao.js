@@ -1,5 +1,23 @@
 const { users, wallets } = require('../config/database');
 
+exports.get_user = async id => {
+    try{
+        const resp = await users.findOne({
+            where: {
+                user_id: id
+            }
+        });
+        
+        return resp;
+
+    } catch (e) {
+        console.log(e);
+
+        return null;
+    }
+}
+
+
 exports.get_wallets = async id => {
     try{
         const resp = await wallets.findAll({
@@ -17,6 +35,7 @@ exports.get_wallets = async id => {
         return null;
     }
 }
+
 
 exports.login = async email => {
     try {

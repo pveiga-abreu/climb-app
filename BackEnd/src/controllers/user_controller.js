@@ -4,14 +4,34 @@ const bcrypt = require('bcrypt');
 const validator = require('../validators/user_validator');
 const db = require('../models/user_dao');
 
+exports.get_user = async (req, res) => {
+    const id = req.params.id;
+
+    const response = await db.get_user(id);
+
+    if(response != null) {
+        res.json({
+            user_id: response.user_id,
+            name: response.name,
+            tel: response.tel,
+            cpf_cnpj: response.cpf_cnpj,
+            email: response.email,
+            profile: response.profile
+        });
+    }
+    else res.status(204).json({});
+}
+
+
 exports.get_wallets = async (req, res) => {
     const id = req.params.id;
-    
+
     const response = await db.get_wallets(id);
 
     if(response != null) res.json(response);
     else res.status(204).json({});
 }
+
 
 exports.login = async (req, res) => {
     try {

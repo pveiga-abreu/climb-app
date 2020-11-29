@@ -1,5 +1,29 @@
 const validator = require('../validators/wallet_validators');
+const asset_stats = require('../util/asset_stats');
 const db = require('../models/wallet_dao');
+
+exports.get_info = async (req, res) => {
+    const id = req.params.id;
+
+    const wlt_response = await db.wallet_info(id);
+    if(wlt_response === null) return res.status(204).json({});
+
+    const response = {
+        wallet: {
+            id: wlt_response.wallet_id,
+            name: wlt_response.name,
+            description: wlt_response.description
+        }
+    }
+
+    const ast_response = await db.assets_info(id);
+
+    response.assets = await asset_stats.asset_stats(ast_response);
+
+    res.json(response);
+
+}
+
 
 exports.register_wallet = async (req, res) => {
     try {
