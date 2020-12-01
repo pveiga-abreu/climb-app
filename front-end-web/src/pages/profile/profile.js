@@ -1,8 +1,12 @@
 import React from 'react';
-import { Container } from './style.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUserTie, faWallet } from '@fortawesome/free-solid-svg-icons'
+
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Card from '../../components/Card'
+import CardContainer from '../../components/CardContainer'
+import { Container } from './style.js';
 
 export default function Profile() {
     return(
@@ -10,10 +14,35 @@ export default function Profile() {
             <div>
                 <Header />
                     <div className="profile">
-                        <Card className="i1">
-                            Profile 1
+                        <Card>
+                            <CardContainer>
+                                <Card>
+                                    <div>
+                                        <FontAwesomeIcon icon={faUserTie} size="2x"/>
+                                    </div>
+                                    <strong>
+                                        Profile
+                                    </strong>
+                                </Card>
+                                <Card>
+                                    <div>
+                                        <FontAwesomeIcon icon={faWallet} size="2x"/>
+                                    </div>
+                                    <strong>
+                                        Wallet
+                                    </strong>
+                                </Card>
+                                <Card>
+                                    <div>
+                                        <FontAwesomeIcon icon={faWallet} size="2x"/>
+                                    </div>
+                                    <strong>
+                                        Wallet
+                                    </strong>
+                                </Card>
+                            </CardContainer>
                         </ Card>
-                        <Card className="i2">
+                        <Card >
                             Profile 2
                         </ Card>
                     </div>

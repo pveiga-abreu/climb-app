@@ -25,11 +25,11 @@ export const StyledHeader = styled.header`
         justify-content: space-evenly;
     }
 
-    .icon {
-        width: 1.7em;
-        :hover {
-            fill-opacity: 0.7;
-            transform: scale(1.2);
-        }
+
+
+    path {
+        color: #574209;
     }
+    
+
 `

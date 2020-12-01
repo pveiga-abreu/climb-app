@@ -1,19 +1,26 @@
 import React from 'react';
 import footerImage from '../../assets/footer.svg';
 import { StyledFooter } from './style.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFacebook, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons'
+
+import CardContainer from '../../components/CardContainer'
 
 const Footer = () => {
     return(
-        <StyledFooter>
+        <StyledFooter className="footer">
             <img src={ footerImage }></img>
-            <div className="container">
+            <CardContainer>
                 <div>
-                    Climb with Intelligence
+                    Climb copyright ©
                 </div>
-                <div>
-                    Bloco2
+                <div id="logos">
+                    <FontAwesomeIcon icon={faFacebook} size="2x" cursor="pointer" />
+                    <FontAwesomeIcon icon={faInstagram} size="2x"  cursor="pointer"/>
+                    <FontAwesomeIcon icon={faTwitter} size="2x"  cursor="pointer" />
                 </div>
-            </div>
+            </CardContainer>
+
         </StyledFooter>
     )
 }
