@@ -16,8 +16,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Carregando as rotas
 const userRoute = require('./routes/user');
 const walletRoute = require('./routes/wallet');
+const recordRoute = require('./routes/record');
 
 app.use('/user', userRoute);
 app.use('/wallet', walletRoute);
+app.use('/record', recordRoute);
 
 module.exports = app;

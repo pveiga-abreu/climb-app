@@ -1,10 +1,45 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
+const validator = require('../validators/user_validator');
 const db = require('../models/user_dao');
+
+exports.get_user = async (req, res) => {
+    const id = req.params.id;
+
+    const response = await db.get_user(id);
+
+    if(response != null) {
+        res.json({
+            user_id: response.user_id,
+            name: response.name,
+            tel: response.tel,
+            cpf_cnpj: response.cpf_cnpj,
+            email: response.email,
+            profile: response.profile
+        });
+    }
+    else res.status(204).json({});
+}
+
+
+exports.get_wallets = async (req, res) => {
+    const id = req.params.id;
+
+    const response = await db.get_wallets(id);
+
+    if(response != null) res.json(response);
+    else res.status(204).json({});
+}
+
 
 exports.login = async (req, res) => {
     try {
+        const v = validator.validate_login(req.body);
+        if(!v.valid) {
+            return res.status(400).send({message: v.errors})
+        }
+
         const response = await db.login(req.body.email);
 
         if (response !== null) {
@@ -39,6 +74,11 @@ exports.login = async (req, res) => {
 exports.register_user =  async (req, res) => {
     let data = req.body;
 
+    const v = validator.validate_user_insert(data);
+    if(!v.valid) {
+        return res.status(400).send({message: v.errors})
+    }
+
     bcrypt.hash(data.password, 10, async (errBcrypt, hash) => {
         if (errBcrypt) {
             return res.status(500).json({ error: errBcrypt })
@@ -69,6 +109,11 @@ exports.register_user =  async (req, res) => {
 
 exports.alter_user = async (req, res) => {
     let data = req.body;
+
+    const v = validator.validate_user_update(data);
+    if(!v.valid) {
+        return res.status(400).send({message: v.errors})
+    }
 
     if(!Object.keys(data).includes('password')) {
         try {

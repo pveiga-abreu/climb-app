@@ -56,27 +56,27 @@ const asset_classes = conn.define('asset_classes', {
 
 // CRIANDO OS RELACIONAMENTOS
 // users - wallets (1:n)
-users.hasMany(wallets);
+users.hasMany(wallets, {foreignKey: 'wallet_id'});
 // wallets - users (1:1)
 wallets.belongsTo(users, {foreignKey: 'user_id', onDelete: 'cascade', onUpdate: 'cascade'});
 
 // wallets - assets (1:n)
-wallets.hasMany(assets);
+wallets.hasMany(assets, {foreignKey: 'asset_id'});
 // assets - wallets (1:1)
 assets.belongsTo(wallets, {foreignKey: 'wallet_id', onDelete: 'cascade', onUpdate: 'cascade'});
 
 // assets - asset_records (1:n)
-assets.hasMany(asset_records);
+assets.hasMany(asset_records, {foreignKey: 'record_id'});
 // asset_records - assets (1:1)
 asset_records.belongsTo(assets, {foreignKey: 'asset_id', onDelete: 'cascade', onUpdate: 'cascade'});
 
 // tickers - assets (1:n)
-tickers.hasMany(assets);
+tickers.hasMany(assets, {foreignKey: 'asset_id'});
 // assets - tickers (1:1)
 assets.belongsTo(tickers, {foreignKey: 'ticker', as: 'cod_ticker', onDelete: 'cascade', onUpdate: 'cascade'});
 
 // asset_classes - ticker (1:n)
-asset_classes.hasMany(tickers);
+asset_classes.hasMany(tickers, {foreignKey: 'ticker'});
 // tickers - asset_classes (1:1)
 tickers.belongsTo(asset_classes, {foreignKey: 'asset_class_id', onDelete: 'cascade', onUpdate: 'cascade'});
 
@@ -85,6 +85,7 @@ tickers.belongsTo(asset_classes, {foreignKey: 'asset_class_id', onDelete: 'casca
 conn.sync();
 
 module.exports = {
+    conn,
     users,
     wallets,
     assets,
