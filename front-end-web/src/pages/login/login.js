@@ -1,6 +1,10 @@
 import React, { useState, useRef } from 'react';
+import { useDispatch } from 'react-redux'
+import jwt from 'jsonwebtoken'
+
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
+
 
 import Footer from '../../components/Footer';
 import {Load} from '../../components/Load';
@@ -12,9 +16,10 @@ import {api} from '../../services';
 
 import { Container } from './style';
 
-export default function Login() {
+export default function Login({ history }) {
   const formLogin = useRef(null)
   const [onRequest, setOnRequest] = useState(false)
+  const dispatch = useDispatch()
 
 
     function handleSubmit(data, { reset }) {
@@ -34,11 +39,24 @@ export default function Login() {
 
                 try{
                     setOnRequest(true)
-                    const request = await api.post(`/login`, {
+                    const request = await api.post(`/user/login`, {
                         email: data.email, 
                         password: data.password 
                     })
-                    console.log(request)
+                    if (request.status === 200) {
+                        const { token } = request.data
+                        const {id, name, profile } = jwt.decode(token) 
+
+
+                        const user = {
+                            token: token,
+                            id: id,
+                            name: name,
+                            profile: profile
+                        }
+                        dispatch({ type: 'USER_LOGIN', payload: user })
+                        history.push('/wallet')
+                      }
 
 
                     setOnRequest(false)

@@ -7,28 +7,7 @@ export const Container = styled.div`
         height: fit-content;
         flex-direction: row;
 
-        #plus{
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin-left: 10px;
-                width: fit-content;
-                border-radius: 50%;
-                padding: 10px;
-                background-color: #E0E0E0;
-                cursor: pointer;
-            
-                path{
-                    color: #112257;
-                }
-
-                :hover{
-                    transition: 0.3s;
-                    transform: scale(1.04);
-                }
-            }
-
-        #top-wallet{
+        .card{
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -60,6 +39,13 @@ export const Container = styled.div`
             }
         }
 
+        .card-selected {
+            background-color: #112257;
+            strong , path {
+                color: #FFF;
+            }
+        }
+
         .card:hover{
             transition: 0.3s;
             transform: scale(1.04);
@@ -68,56 +54,174 @@ export const Container = styled.div`
 
 
     .wallet {
-        display: grid;
-        grid-template-columns: 0.8fr 2.2fr;
-        min-height: 450px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
 
-        #wallet-left{
-            .cardContainer{
+
+        #div-top {
+            height: fit-content;
+            width: 100%;
+            margin: 40px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+
+            div {
                 display: flex;
-                flex-direction: column;
+                flex-direction: row;
                 align-items: center;
                 justify-content: center;
+                width: 90vw;
+                padding: 0 20px;
+                overflow: scroll;
+                box-sizing: border-box;
 
-                .card{
-                    width: 80%;       
-                    div{
+
+                .card {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: space-around;
+                    width: 150px ;
+                    min-width: 150px ;
+                    height: 180px;
+                    box-shadow: 1px 1px 4px 2px #c0c0c0;
+
+                    h5 {
                         display: flex;
-                        height: 70%;
-                        padding: 10px;
-                        justify-content: center;
                         align-items: center;
+                        justify-content: space-around;
+                        font-size: 18px;
+                        font-weight: 900;
+                        color: #112257;
+                    }
 
-                        :first-child{
-                            align-items: flex-start;
-                            justify-content: space-between;
-                        }
+                    .positive-balance {
+                        width: 40px;
+                        height: fit-content;
+                        line-height: 15px;
+                        font-size: 10px;
+                        background-color: #2ecc71;
+                        color: #FFF;
+                    }
+                    .negative-balance {
+                        width: 40px;
+                        height: fit-content;
+                        line-height: 15px;
+                        font-size: 10px;
+                        background-color: #8b0000;
+                        color: #FFF;  
+                    }
 
-                        strong {
-                            font-size: 22px;
+                    strong {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-around;
+                        color: #424959;
+                        font-weight: 500;
+                    }
+
+                    p {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-around;
+                        color: #424959;
+
+                        :last-child {
+                            font-size: 10px;
                         }
-                    }   
+                    }
+
+                    #location-chart {
+                        width: 100px;
+                        height: 3px;
+                    }
+                }
+            }
+        }
+        
+        #div-middle{
+            display: flex;
+            width: 100%;
+            height: 235px;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+
+
+            .mini-card{
+                display: flex;
+                flex-direction: column;
+                width: 40%;   
+                height: 100%;
+                background-color: #112257;
+
+
+                div{
+                    width: 100%;       
+                    height: 100%;
+                    display: flex;
+                    padding: 10px;
+                    justify-content: center;
+                    align-items: center;
+
+                    :first-child{
+                        align-items: flex-start;
+                        justify-content: space-between;
+                        height: 20%;
+                    }
+
+                    label {
+                        color: #fff;
+                    }
+
+                    strong {
+                        color: #fff;
+                        font-size: 30px;
+                    }
+
+                    path {
+                        color: #fff;
+                    }
+                }   
+            }
+            .card {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+
+                div {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    width: 50%;
                 }
             }
         }
 
-        #wallet-rigth{
-            .cardContainer{
-                height: 100%;
 
-                #evolution{
-                    margin-bottom: 60px;
-                }
+        #div-down {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
 
-                .label{
+
+            .card {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+
+                label {
                     display: flex;
                     width: 100%;
                     justify-content: center;
                     align-items: center;
-                }
-
-                .table{
-                    width: 100%;
                 }
             }
         }
