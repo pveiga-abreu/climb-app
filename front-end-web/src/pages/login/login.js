@@ -1,9 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux'
 import jwt from 'jsonwebtoken'
-
-import { Form } from '@unform/web';
 import * as Yup from 'yup';
+
+import {api} from '../../services';
+import toast from '../../services/toast'
 
 
 import Footer from '../../components/Footer';
@@ -11,8 +12,7 @@ import {Load} from '../../components/Load';
 import {Button, ContainerButton} from '../../components/Button';
 import logo from '../../assets/logo.svg';
 import Input from '../../components/Form/Input';
-
-import {api} from '../../services';
+import Form from '../../components/Form';
 
 import { Container } from './style';
 
@@ -62,6 +62,7 @@ export default function Login({ history }) {
                     setOnRequest(false)
                     resolve()
                 }catch(err){
+                    toast('error', 'Valide Seus Dados Cadastrais')
                     setOnRequest(false)
                     reject(err)
                 }
@@ -95,6 +96,7 @@ export default function Login({ history }) {
                         )
                     }
                     </ContainerButton>
+                    <strong onClick={() => history.push('/register')}>Registre-se</strong>
 
                     
                 </Form>

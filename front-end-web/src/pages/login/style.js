@@ -29,6 +29,12 @@ export const Container = styled.div`
                 .error {
                     color: #e74c3c !important;
                 }
+
+                strong {
+                    color: #314ba3;
+                    font-size: 12px;
+                    cursor: pointer;
+                }
             }
         }
     }

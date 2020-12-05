@@ -43,6 +43,13 @@ export const Container = styled.div`
 
             }
 
+            .card-selected {
+                background-color: #112257;
+                strong , path {
+                    color: #FFF;
+                }
+            }
+
             .card:hover{
                 transition: 0.3s;
                 transform: scale(1.04);
@@ -84,7 +91,7 @@ export const Container = styled.div`
                 justify-content: center;
                 width: 70%;
 
-                form {
+                .form {
                     display: flex;
                     flex-direction: column;
                     width: 100%;
@@ -114,6 +121,6 @@ export const Container = styled.div`
 
                 }
             }
-
         }
+    }
 `

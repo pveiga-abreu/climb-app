@@ -12,6 +12,10 @@ export const StyledButton = styled.button`
     transition: 0.7s;
     cursor: pointer;
 
+    :hover {
+      background: #574209
+    }
+
     :disabled {
     background: #ddd;
     border: #ddd;

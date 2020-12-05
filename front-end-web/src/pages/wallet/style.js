@@ -99,20 +99,30 @@ export const Container = styled.div`
                     }
 
                     .positive-balance {
-                        width: 40px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: fit-content;
+                        min-width: 40px;
                         height: fit-content;
                         line-height: 15px;
                         font-size: 10px;
                         background-color: #2ecc71;
                         color: #FFF;
+                        border-radius: 4px;
                     }
                     .negative-balance {
-                        width: 40px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: fit-content;
+                        min-width: 40px;
                         height: fit-content;
                         line-height: 15px;
                         font-size: 10px;
                         background-color: #8b0000;
                         color: #FFF;  
+                        border-radius: 4px;
                     }
 
                     strong {
@@ -201,6 +211,9 @@ export const Container = styled.div`
                     justify-content: center;
                     align-items: center;
                     width: 50%;
+                    height: 100%;
+
+
                 }
             }
         }
@@ -209,22 +222,44 @@ export const Container = styled.div`
         #div-down {
             display: flex;
             flex-direction: column;
-            width: 100%;
+            width: 1360px;
+            justify-content: center;
+            align-items: center;
 
 
             .card {
-                width: 100%;
-                display: flex;
+                display: table;
                 flex-direction: column;
+                width: 99%;
 
                 label {
                     display: flex;
-                    width: 100%;
                     justify-content: center;
                     align-items: center;
                 }
             }
+
+            #plus{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: fit-content;
+                border-radius: 50%;
+                padding: 10px;
+                background-color: #E0E0E0;
+                cursor: pointer;
+            
+                path{
+                    color: #112257;
+                }
+
+                :hover{
+                    transition: 0.3s;
+                    transform: scale(1.04);
+                }
+            }
+
         }
         
-    }
+    } 
 `
