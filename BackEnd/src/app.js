@@ -17,9 +17,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const userRoute = require('./routes/user');
 const walletRoute = require('./routes/wallet');
 const recordRoute = require('./routes/record');
+const tickerRoute = require('./routes/ticker');
 
 app.use('/user', userRoute);
 app.use('/wallet', walletRoute);
 app.use('/record', recordRoute);
+app.use('/ticker', tickerRoute);
 
 module.exports = app;
