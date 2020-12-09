@@ -13,7 +13,6 @@ import Card from '../../components/Card'
 import CardContainer from '../../components/CardContainer'
 import Form from '../../components/Form'
 import Input from '../../components/Form/Input'
-import Select from '../../components/Form/Select';
 import Button from '../../components/Button';
 import { Container } from './style.js';
 import {Load} from '../../components/Load';

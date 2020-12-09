@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, PureComponent} from 'react';
 import { useSelector } from 'react-redux'
 import Modal from 'react-modal';
 
 
 import { Form } from '@unform/web';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faWallet, faEye, faEyeSlash,faPlus } from '@fortawesome/free-solid-svg-icons'
-import { PieChart, Pie, Cell } from 'recharts'
+import { faWallet, faEye, faEyeSlash,faPlus, faBoxOpen } from '@fortawesome/free-solid-svg-icons'
+import { PieChart, Pie, Cell, Sector } from 'recharts'
 
 import { api } from '../../services'
 import toast from '../../services/toast'
@@ -18,7 +18,7 @@ import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Button from '../../components/Button';
 import Card from '../../components/Card';
-import Label from '../../components/Label';
+import Label from '../../components/Header/Label';
 import CardContainer from '../../components/CardContainer'
 import Table from '../../components/Table'
 import { Container } from './style.js';
@@ -34,6 +34,7 @@ export default function Wallet({ history }) {
     const [tickers, setTickers] = useState([])
     const [walletSelected, setWalletSelected] = useState(null)    
     const [valueWallet, setValueWallet] = useState(null)
+    const [dataGraficDivision, setDataGraficDivision] = useState([])
     const [dataGrafic, setDataGrafic] = useState([])
     const [lastMoviment, setLastMoviment] = useState({})
     const [optionTickers, setOptionTickers] = useState([])
@@ -59,6 +60,7 @@ export default function Wallet({ history }) {
     },[])
 
     const loadData = (id) => {
+        setOnRequest(true)
         return new Promise (async (resolve, reject) => {
             try{
 
@@ -75,6 +77,7 @@ export default function Wallet({ history }) {
                     setTickers([])
                     setValueWallet(null)
                     setDataGrafic([])
+                    setDataGraficDivision([])
                     setLastMoviment({})
                     selected = id 
                 }
@@ -92,10 +95,17 @@ export default function Wallet({ history }) {
                     const grafic = assets.map(row => {
                         return {
                             name: row.ticker, 
-                            value: row.percent 
+                            value: row.total 
+                        }
+                    })
+                    const graficDivision = assets.map(row => {
+                        return {
+                            name: row.ticker, 
+                            value: row.quotas 
                         }
                     })
                     setDataGrafic(grafic)
+                    setDataGraficDivision(graficDivision)
                 }
 
                 const requestLastMoviment = await api.get(`/record/last/${selected}`)
@@ -104,8 +114,10 @@ export default function Wallet({ history }) {
                     setLastMoviment(data)
                 }
 
+                setOnRequest(false)
                 resolve()
             }catch(err){
+                setOnRequest(false)
                 reject(err)
             }
         })
@@ -136,19 +148,18 @@ export default function Wallet({ history }) {
 
     const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
     const RADIAN = Math.PI / 180;
-
     const renderCustomizedLabel = ({
-    cx, cy, midAngle, innerRadius, outerRadius, percent, index,
+      cx, cy, midAngle, innerRadius, outerRadius, percent, index,
     }) => {
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-    const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-    return (
+       const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+      const x = cx + radius * Math.cos(-midAngle * RADIAN);
+      const y = cy + radius * Math.sin(-midAngle * RADIAN);
+    
+      return (
         <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
-        {`${(percent * 100).toFixed(0)}%`}
+          {`${(percent * 100).toFixed(0)}%`}
         </text>
-    );
+      );
     };
     
 
@@ -206,6 +217,25 @@ export default function Wallet({ history }) {
         return 'card'
     }
 
+    const formatString = (data, type) => {
+        if(data !== undefined && data !== null){
+
+            if(type === 'order_type'){
+                if(data === 'B') return 'Compra'
+                if(data === 'S') return 'Venda'
+            }
+
+            if(type === 'date'){
+                const dateFormated = data.split('-')
+                return  dateFormated[2] + '/' + dateFormated[1] + '/' + dateFormated[0]
+            }
+
+            if(type === 'price'){
+                return 'R$' + data
+            }
+        }
+    }
+
 
     return(
         <Container>
@@ -229,6 +259,15 @@ export default function Wallet({ history }) {
                                 ))
                             ) : (
                                 <>
+                                {
+                                    onRequest ? (
+                                        <Load></Load>
+                                    ) : (
+                                        <>
+                                        <FontAwesomeIcon icon={faBoxOpen} size="2x" />
+                                        </>
+                                    )
+                                }
                                 </>
                             )
                         }
@@ -251,7 +290,15 @@ export default function Wallet({ history }) {
                                         ))
                                     ) : (
                                         <>
-                                        <Load></Load>
+                                        {
+                                            onRequest ? (
+                                                <Load></Load>
+                                            ) : (
+                                                <>
+                                                Não há investimento
+                                                </>
+                                            )
+                                        }
                                         </>
                                     )
                                 }
@@ -272,19 +319,27 @@ export default function Wallet({ history }) {
                                                 </strong>
                                             ) : (
                                                 <strong>
-                                                    {valueWallet === null ? <Load></Load> : `R$ ${valueWallet.toFixed(2)}`}
+                                                {
+                                                    onRequest ? (
+                                                        <Load></Load>
+                                                    ) : (
+                                                        <>
+                                                        {valueWallet === null ? 0 : `R$ ${valueWallet.toFixed(2)}`}
+                                                        </>
+                                                    )
+                                                }
                                                 </strong>
                                             )}
                                     </div>
                                 </Card>
                                 <Card>
                                     <div>
-                                    <h4>Divisão Carteira</h4>
+                                    <h4>Divisão por Cotas</h4>
                                     {
-                                        dataGrafic.length > 0 ? (
+                                        dataGraficDivision.length > 0 ? (
                                         <PieChart width={200} height={200}>
                                             <Pie
-                                                data={dataGrafic}
+                                                data={dataGraficDivision}
                                                 cx={100}
                                                 cy={100}
                                                 startAngle={180}
@@ -296,39 +351,59 @@ export default function Wallet({ history }) {
                                                 dataKey="value"
                                                 >
                                                 {
-                                                    dataGrafic.length > 0 
-                                                    ? dataGrafic.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
+                                                    dataGraficDivision.length > 0 
+                                                    ? dataGraficDivision.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
                                                     : <Load></Load>
                                                 }
                                             </Pie>
                                         </PieChart>
                                         ) : (
-                                            <Load></Load>
+                                            <>
+                                            {
+                                                onRequest ? (
+                                                    <Load></Load>
+                                                ) : (
+                                                    <>
+                                                    -
+                                                    </>
+                                                )
+                                            }
+                                            </>
                                         )
                                     }
                                     </div>
                                     <div>
-                                    <h4>Ações %</h4>
+                                    <h4>Divisão do Patrimônio</h4>
                                     {
                                         dataGrafic.length > 0 ? (
-                                            <PieChart width={200} height={200}>
+                                        <PieChart width={200} height={200}>
                                             <Pie
-                                            data={dataGrafic}
-                                            cx={100}
-                                            cy={100}
-                                            labelLine={false}
-                                            label={renderCustomizedLabel}
-                                            outerRadius={80}
-                                            fill="#8884d8"
-                                            dataKey="value"
+                                              data={dataGrafic}
+                                              cx={100}
+                                              cy={100}
+                                              labelLine={false}
+                                              label={renderCustomizedLabel}
+                                              outerRadius={80}
+                                              fill="#8884d8"
+                                              dataKey="value"
                                             >
-                                            {
+                                              {
                                                 dataGrafic.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
-                                            }
+                                              }
                                             </Pie>
-                                        </PieChart>
+                                          </PieChart>
                                         ) : (
-                                            <Load></Load>
+                                            <>
+                                            {
+                                                onRequest ? (
+                                                    <Load></Load>
+                                                ) : (
+                                                    <>
+                                                    -
+                                                    </>
+                                                )
+                                            }
+                                            </>
                                         )
                                     }
                                     </div>
@@ -349,13 +424,23 @@ export default function Wallet({ history }) {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>{lastMoviment.date === undefined ? <Load></Load> : lastMoviment.date}</td>
-                                                <td>{lastMoviment.ticker === undefined ? <Load></Load> : lastMoviment.ticker}</td>
-                                                <td>{lastMoviment.quotas === undefined ? <Load></Load> : lastMoviment.quotas}</td>
-                                                <td>{lastMoviment.price === undefined ? <Load></Load> : `R$ ${lastMoviment.price}`}</td>
-                                                <td>{lastMoviment.order_type === undefined ? <Load></Load> : lastMoviment.order_type}</td>
-                                            </tr>
+                                            {
+                                                onRequest ? (
+                                                    <tr>
+                                                        <td colspan="5">
+                                                        <Load></Load>
+                                                        </td>
+                                                    </tr>
+                                                ) : (
+                                                    <tr>
+                                                        <td>{formatString(lastMoviment.date, 'date')}</td>
+                                                        <td>{lastMoviment.ticker}</td>
+                                                        <td>{lastMoviment.quotas}</td>
+                                                        <td>{formatString(lastMoviment.price, 'price')}</td>
+                                                        <td>{formatString(lastMoviment.order_type, 'order_type')}</td>
+                                                    </tr>
+                                                )
+                                            }
                                         </tbody>
                                     </Table>
                                 </ Card>

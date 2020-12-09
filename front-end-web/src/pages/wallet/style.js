@@ -7,12 +7,19 @@ export const Container = styled.div`
         height: fit-content;
         flex-direction: row;
 
+        path {
+            color: #112257;
+        }
+
+        
+
         .card{
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 200px;
             cursor: pointer;
+
             
             div {
                 display: flex;
